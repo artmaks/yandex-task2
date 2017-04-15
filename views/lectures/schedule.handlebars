@@ -12,9 +12,11 @@
                 <a href="/schedule/{{this.id}}">{{this.title}}</a>
             </td>
             <td>
-                <a href="/teachers/{{this.teacher}}">{{this.teacherData.name}}</a>
+                <a href="/teachers/{{this.teacher}}">{{this.teacherName}}</a>
             </td>
-            <td>{{this.place}}</td>
+            <td>
+                <a href="/places/{{this.place}}">{{this.placeTitle}}</a>
+            </td>
             <td>{{this.date}}</td>
             <td>
                 <a href="/remove_lecture/{{this.id}}">Удалить</a>
