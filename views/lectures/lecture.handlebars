@@ -20,8 +20,8 @@
         <input value="{{lecture.schoolTitle}}" name="school" placeholder="Школа" required />
     </div>
     <div class="form-field">
-        <span>Дата</span>
-        <input value="{{lecture.date}}" name="date" placeholder="Дата" required />
+        <span>Дата (mm/dd/yyyy)</span>
+        <input value="{{lecture.date}}" name="date" placeholder="Дата" pattern="[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}" required />
     </div>
 
     <button type="submit">Сохранить</button>
