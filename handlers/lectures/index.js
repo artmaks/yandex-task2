@@ -55,26 +55,38 @@ module.exports = function(app, db) {
     function joinTeacherAndPlace(lecture) {
         const teacher = db.get('teachers').find({'id': lecture.teacher}).value();
         const place = db.get('places').find({'id': lecture.place}).value();
+        const school = db.get('schools').find({'id': lecture.school}).value();
         lecture.teacherName = teacher ? teacher.name : '';
         lecture.placeTitle = place ? place.title : '';
+        lecture.schoolTitle = school ? school.title : '';
     }
 
     // Валидация запроса на изменение / добавление данных
     function validateLectureRequest(req, res, page) {
         const teacher = db.get('teachers').find({ name : req.body.teacher }).value();
         const place = db.get('places').find({ title : req.body.place }).value();
-        if(!teacher) {
+        const school = db.get('schools').find({ title : req.body.school }).value();
+
+        const restoreData = function (req) {
             req.body.teacherName = req.body.teacher;
             req.body.placeTitle = req.body.place;
+            req.body.schoolTitle = req.body.school;
             req.body.id = req.params.id;
-            res.render(page, { error : 'Лектора с именем ' + req.body.teacher + ' не существует в базе', lecture : req.body });
+        };
+
+        if(!teacher) {
+            restoreData(req);
+            res.render(page, { error : 'Лектора с именем "' + req.body.teacher + '" не существует в базе', lecture : req.body });
             return false;
         }
         if(!place) {
-            req.body.teacherName = req.body.teacher;
-            req.body.placeTitle = req.body.place;
-            req.body.id = req.params.id;
-            res.render(page, { error : 'Аудитории с именем ' + req.body.place + ' не существует в базе', lecture : req.body });
+            restoreData(req);
+            res.render(page, { error : 'Аудитории с именем "' + req.body.place + '" не существует в базе', lecture : req.body });
+            return false;
+        }
+        if(!school) {
+            restoreData(req);
+            res.render(page, { error : 'Школы с именем "' + req.body.school + '" не существует в базе', lecture : req.body });
             return false;
         }
 
@@ -82,6 +94,8 @@ module.exports = function(app, db) {
         req.body.teacher = teacher.id;
         // Замена имени аудитории на id
         req.body.place = place.id;
+        // Замена имени аудитории на id
+        req.body.school = school.id;
 
         return req;
     }
