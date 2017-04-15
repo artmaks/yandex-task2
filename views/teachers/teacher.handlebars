@@ -1,4 +1,8 @@
 <form action="/teachers/{{teacher.id}}" method="post">
+    {{#if updated}}
+        <div class="message">Запись успешно сохранена. <a href="/teachers">Вернуться к лекторам</a></div>
+        <br>
+    {{/if}}
     <div class="form-field">
         <span>Имя лектора</span>
         <input value="{{teacher.name}}" name="name" placeholder="Имя лектора"/>

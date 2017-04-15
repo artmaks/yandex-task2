@@ -3,6 +3,10 @@
         <div class="error">{{error}}</div>
         <br>
     {{/if}}
+    {{#if updated}}
+        <div class="message">Запись успешно сохранена. <a href="/schedule">Вернуться к лекциям</a></div>
+        <br>
+    {{/if}}
     <div class="form-field">
         <span>Название лекции</span>
         <input value="{{lecture.title}}" name="title" placeholder="Название лекции" required />

@@ -23,13 +23,13 @@ module.exports = function(app, db) {
             .find({id: req.params.id})
             .value();
 
-        res.render('teachers/teacher', {'teacher': teacher});
+        res.render('teachers/teacher', {'teacher': teacher, 'updated' : req.query.updated});
     });
 
     // Обновить экземпляр лектора по id
     app.post('/teachers/:id', function (req, res) {
         db.get('teachers').find({id: req.params.id}).assign(req.body).write().then(function (result) {
-            res.redirect('/teachers/' + result.id);
+            res.redirect('/teachers/' + result.id + '/?updated=true');
         });
     });
 

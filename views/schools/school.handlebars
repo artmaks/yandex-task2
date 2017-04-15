@@ -1,4 +1,8 @@
 <form action="/schools/{{school.id}}" method="post">
+    {{#if updated}}
+        <div class="message">Запись успешно сохранена. <a href="/schools">Вернуться к школам</a></div>
+        <br>
+    {{/if}}
     <div class="form-field">
         <span>Название школы</span>
         <input value="{{school.title}}" name="title" placeholder="Название школы" required />

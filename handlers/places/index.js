@@ -23,13 +23,13 @@ module.exports = function(app, db) {
             .find({id: req.params.id})
             .value();
 
-        res.render('places/place', {'place': place});
+        res.render('places/place', {'place': place, 'updated' : req.query.updated});
     });
 
     // Обновить экземпляр аудитории по id
     app.post('/places/:id', function (req, res) {
         db.get('places').find({id: req.params.id}).assign(req.body).write().then(function (result) {
-            res.redirect('/places/' + result.id);
+            res.redirect('/places/' + result.id + '/?updated=true');
         });
     });
 

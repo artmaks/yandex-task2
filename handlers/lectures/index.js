@@ -29,7 +29,8 @@ module.exports = function(app, db) {
         const lecture = getLectureById(req.params.id);
         joinTeacherAndPlace(lecture);
 
-        res.render('lectures/lecture', {'lecture': lecture});
+
+        res.render('lectures/lecture', {'lecture': lecture, 'updated' : req.query.updated});
     });
 
     // Обновить экземпляр лекции по id
@@ -39,7 +40,7 @@ module.exports = function(app, db) {
             return;
 
         db.get('schedule').find({id: req.params.id}).assign(req.body).write().then(function (result) {
-            res.redirect('/schedule/' + result.id);
+            res.redirect('/schedule/' + result.id + '/?updated=true');
         });
     });
 
