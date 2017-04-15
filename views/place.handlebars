@@ -1,0 +1,12 @@
+<form action="/places/{{place.id}}" method="post">
+    <div class="form-field">
+        <span>Название аудитории</span>
+        <input value="{{place.title}}" name="title" placeholder="Название аудитории"/>
+    </div>
+    <div class="form-field">
+        <span>Вместимость</span>
+        <input value="{{place.capacity}}" name="capacity" placeholder="Вместимость"/>
+    </div>
+
+    <button type="submit">Сохранить</button>
+</form>

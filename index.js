@@ -40,6 +40,12 @@ app.get('/teachers', function (req, res) {
     res.render('teachers', { 'teachers' : teachers });
 });
 
+// Таблица аудиторий
+app.get('/places', function (req, res) {
+    const places = db.get('places').value();
+    res.render('places', { 'places' : places });
+});
+
 // Страница добавления лекции
 app.get('/new_lecture', function (req, res) {
     res.render('new_lecture');
@@ -48,6 +54,11 @@ app.get('/new_lecture', function (req, res) {
 // Страница добавления лектора
 app.get('/new_teacher', function (req, res) {
     res.render('new_teacher');
+});
+
+// Страница добавления аудитории
+app.get('/new_place', function (req, res) {
+    res.render('new_place');
 });
 
 // Обработка добавления лекции
@@ -60,6 +71,12 @@ app.post('/new_lecture', function (req, res) {
 app.post('/new_teacher', function (req, res) {
     db.get('teachers').insert(req.body).write();
     res.redirect('/teachers');
+});
+
+// Обработка добавления аудитории
+app.post('/new_place', function (req, res) {
+    db.get('places').insert(req.body).write();
+    res.redirect('/places');
 });
 
 // Страница редактирования лекции по id
@@ -80,6 +97,15 @@ app.get('/teachers/:id',  function (req, res) {
     res.render('teacher', { 'teacher' : teacher });
 });
 
+// Страница редактирования аудитории по id
+app.get('/places/:id',  function (req, res) {
+    const place = db.get('places')
+        .find({ id: req.params.id })
+        .value();
+
+    res.render('place', { 'place' : place });
+});
+
 // Обновить экземпляр лекции по id
 app.post('/schedule/:id',  function (req, res) {
     db.get('schedule').find({ id : req.params.id }).assign(req.body).write();
@@ -92,6 +118,13 @@ app.post('/teachers/:id',  function (req, res) {
     res.redirect('/teachers');
 });
 
+// Обновить экземпляр аудитории по id
+app.post('/places/:id',  function (req, res) {
+    db.get('places').find({ id : req.params.id }).assign(req.body).write();
+    res.redirect('/places');
+});
+
+
 // Удалить экземпляр лекции по id
 app.get('/remove_lecture/:id',  function (req, res) {
     db.get('schedule').remove({ id : req.params.id }).write();
@@ -102,6 +135,12 @@ app.get('/remove_lecture/:id',  function (req, res) {
 app.get('/remove_teacher/:id',  function (req, res) {
     db.get('teachers').remove({ id : req.params.id }).write();
     res.redirect('/teachers');
+});
+
+// Удалить экземпляр аудитории по id
+app.get('/remove_place/:id',  function (req, res) {
+    db.get('places').remove({ id : req.params.id }).write();
+    res.redirect('/places');
 });
 
 
