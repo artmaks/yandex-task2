@@ -1,0 +1,21 @@
+<table border="1">
+    <tr>
+        <th>Название</th>
+        <th>Участников</th>
+        <th>Удалить</th>
+    </tr>
+    {{#each schools}}
+        <tr>
+            <td>
+                <a href="/schools/{{this.id}}">{{this.title}}</a>
+            </td>
+            <td>{{this.members}}</td>
+            <td>
+                <a href="/remove_school/{{this.id}}">Удалить</a>
+            </td>
+        </tr>
+    {{/each}}
+</table>
+
+<br>
+<a href="/new_school">Добавить школу</a>

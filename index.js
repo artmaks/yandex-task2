@@ -27,6 +27,7 @@ app.get('/', function (req, res) {
 require('./handlers/lectures')(app, db);
 require('./handlers/places')(app, db);
 require('./handlers/teachers')(app, db);
+require('./handlers/schools')(app, db);
 
 // Тестовая инициализация таблицы бд
 app.get('/setTest', function (req, res) {
