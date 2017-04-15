@@ -1,0 +1,23 @@
+<table border="1">
+    <tr>
+        <th>Имя</th>
+        <th>Название файла фотографии</th>
+        <th>Описание</th>
+        <th>Удалить</th>
+    </tr>
+    {{#each teachers}}
+        <tr>
+            <td>
+                <a href="/teachers/{{this.id}}">{{this.name}}</a>
+            </td>
+            <td>{{this.photo}}</td>
+            <td>{{this.about}}</td>
+            <td>
+                <a href="/remove_teacher/{{this.id}}">Удалить</a>
+            </td>
+        </tr>
+    {{/each}}
+</table>
+
+<br>
+<a href="/new_teacher">Добавить лектора</a>

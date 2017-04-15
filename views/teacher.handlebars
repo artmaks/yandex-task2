@@ -1,0 +1,16 @@
+<form action="/teachers/{{teacher.id}}" method="post">
+    <div class="form-field">
+        <span>Имя лектора</span>
+        <input value="{{teacher.name}}" name="name" placeholder="Имя лектора"/>
+    </div>
+    <div class="form-field">
+        <span>Название файла фотографии</span>
+        <input value="{{teacher.photo}}" name="photo" placeholder="Фото"/>
+    </div>
+    <div class="form-field">
+        <span>О лекторе</span>
+        <textarea name="about" placeholder="О лекторе">{{teacher.about}}</textarea>
+    </div>
+
+    <button type="submit">Сохранить</button>
+</form>

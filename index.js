@@ -30,18 +30,35 @@ app.get('/schedule', function (req, res) {
     res.render('schedule', { 'schedule' : schedule });
 });
 
+// Таблица лекторов
+app.get('/teachers', function (req, res) {
+    const teachers = db.get('teachers').value();
+    res.render('teachers', { 'teachers' : teachers });
+});
+
 // Страница добавления лекции
 app.get('/new_lecture', function (req, res) {
     res.render('new_lecture');
 });
 
-// Страница добавления лекции
+// Страница добавления лектора
+app.get('/new_teacher', function (req, res) {
+    res.render('new_teacher');
+});
+
+// Обработка добавления лекции
 app.post('/new_lecture', function (req, res) {
     db.get('schedule').insert(req.body).write();
     res.redirect('/schedule');
 });
 
-// Страница редактирования лекции оп id
+// Обработка добавления лектора
+app.post('/new_teacher', function (req, res) {
+    db.get('teachers').insert(req.body).write();
+    res.redirect('/teachers');
+});
+
+// Страница редактирования лекции по id
 app.get('/schedule/:id',  function (req, res) {
     const lecture = db.get('schedule')
         .find({ id: req.params.id })
@@ -50,10 +67,25 @@ app.get('/schedule/:id',  function (req, res) {
     res.render('lecture', { 'lecture' : lecture });
 });
 
+// Страница редактирования лектора по id
+app.get('/teachers/:id',  function (req, res) {
+    const teacher = db.get('teachers')
+        .find({ id: req.params.id })
+        .value();
+
+    res.render('teacher', { 'teacher' : teacher });
+});
+
 // Обновить экземпляр лекции по id
 app.post('/schedule/:id',  function (req, res) {
     db.get('schedule').find({ id : req.params.id }).assign(req.body).write();
     res.redirect('/schedule');
+});
+
+// Обновить экземпляр лектора по id
+app.post('/teachers/:id',  function (req, res) {
+    db.get('teachers').find({ id : req.params.id }).assign(req.body).write();
+    res.redirect('/teachers');
 });
 
 // Удалить экземпляр лекции по id
@@ -61,6 +93,13 @@ app.get('/remove_lecture/:id',  function (req, res) {
     db.get('schedule').remove({ id : req.params.id }).write();
     res.redirect('/schedule');
 });
+
+// Удалить экземпляр лектора по id
+app.get('/remove_teacher/:id',  function (req, res) {
+    db.get('teachers').remove({ id : req.params.id }).write();
+    res.redirect('/teachers');
+});
+
 
 // Тестовая инициализация таблицы бд
 app.get('/setTest', function (req, res) {
@@ -77,7 +116,6 @@ app.get('/setTest', function (req, res) {
             res.send(post)
         });
 });
-
 
 // Тестовая функция чтения таблицы БД
 app.get('/getTest', function (req, res) {
