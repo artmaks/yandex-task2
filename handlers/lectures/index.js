@@ -89,6 +89,12 @@ module.exports = function(app, db) {
             res.render(page, { error : 'Школы с именем "' + req.body.school + '" не существует в базе', lecture : req.body });
             return false;
         }
+        if(parseInt(school.members) > parseInt(place.capacity)) {
+            restoreData(req);
+            res.render(page, { error : 'Аудитория "' + place.title + '" вмещает максимум ' + place.capacity + ' человек. ' +
+            'В школе "' + school.title + '" ' + school.members + ' человек', lecture : req.body });
+            return false;
+        }
 
         // Замена имени лектора на id
         req.body.teacher = teacher.id;
