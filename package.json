@@ -1,0 +1,23 @@
+{
+  "name": "yandex-task2",
+  "version": "1.0.0",
+  "description": "Yandex task #2",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artmaks/yandex-task2.git"
+  },
+  "author": "Artem Maksimov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artmaks/yandex-task2/issues"
+  },
+  "homepage": "https://github.com/artmaks/yandex-task2#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
