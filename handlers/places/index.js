@@ -12,8 +12,9 @@ module.exports = function(app, db) {
 
     // Обработка добавления аудитории
     app.post('/new_place', function (req, res) {
-        db.get('places').insert(req.body).write();
-        res.redirect('/places');
+        db.get('places').insert(req.body).write().then(function (result) {
+            res.redirect('/places/' + result.id);
+        });
     });
 
     // Страница редактирования аудитории по id
@@ -27,8 +28,9 @@ module.exports = function(app, db) {
 
     // Обновить экземпляр аудитории по id
     app.post('/places/:id', function (req, res) {
-        db.get('places').find({id: req.params.id}).assign(req.body).write();
-        res.redirect('/places');
+        db.get('places').find({id: req.params.id}).assign(req.body).write().then(function (result) {
+            res.redirect('/places/' + result.id);
+        });
     });
 
     // Удалить экземпляр аудитории по id

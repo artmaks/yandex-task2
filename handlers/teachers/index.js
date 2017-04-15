@@ -12,8 +12,9 @@ module.exports = function(app, db) {
 
     // Обработка добавления лектора
     app.post('/new_teacher', function (req, res) {
-        db.get('teachers').insert(req.body).write();
-        res.redirect('/teachers');
+        db.get('teachers').insert(req.body).write().then(function (result) {
+            res.redirect('/teachers/' + result.id);
+        });
     });
 
     // Страница редактирования лектора по id
@@ -27,8 +28,9 @@ module.exports = function(app, db) {
 
     // Обновить экземпляр лектора по id
     app.post('/teachers/:id', function (req, res) {
-        db.get('teachers').find({id: req.params.id}).assign(req.body).write();
-        res.redirect('/teachers');
+        db.get('teachers').find({id: req.params.id}).assign(req.body).write().then(function (result) {
+            res.redirect('/teachers/' + result.id);
+        });
     });
 
     // Удалить экземпляр лектора по id

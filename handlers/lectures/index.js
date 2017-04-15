@@ -16,8 +16,9 @@ module.exports = function(app, db) {
 
     // Обработка добавления лекции
     app.post('/new_lecture', function (req, res) {
-        db.get('schedule').insert(req.body).write();
-        res.redirect('/schedule');
+        db.get('schedule').insert(req.body).write().then(function (result) {
+            res.redirect('/schedule/' + result.id);
+        });
     });
 
     // Страница редактирования лекции по id
@@ -31,8 +32,9 @@ module.exports = function(app, db) {
 
     // Обновить экземпляр лекции по id
     app.post('/schedule/:id', function (req, res) {
-        db.get('schedule').find({id: req.params.id}).assign(req.body).write();
-        res.redirect('/schedule');
+        db.get('schedule').find({id: req.params.id}).assign(req.body).write().then(function (result) {
+            res.redirect('/schedule/' + result.id);
+        });
     });
 
     // Удалить экземпляр лекции по id
