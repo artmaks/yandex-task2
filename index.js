@@ -1,8 +1,52 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
+const low = require('lowdb');
+const fileAsync = require('lowdb/lib/storages/file-async')
+var exphbs = require('express-handlebars');
 
+const db = low('db.json', {
+    storage: fileAsync
+});
+
+db.defaults({ posts: [] })
+    .write();
+
+app.use(express.static(__dirname + '/public'));
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+// Главная страница
 app.get('/', function (req, res) {
-    res.send('Hello World!');
+    res.render('home');
+});
+
+// Таблица лекций
+app.get('/schedule', function (req, res) {
+    const schedule = db.get('schedule').value();
+    res.render('schedule', { 'schedule' : schedule });
+});
+
+// Тестовая инициализация таблицы бд
+app.get('/setTest', function (req, res) {
+    db.get('schedule')
+        .push({
+            title: "Лекция 1. Адаптивная вёрстка",
+            school: "Школа разработки интерфейсов",
+            teacher: "Дмитрий Душкин",
+            date: "03/03/2017",
+            place: "Синий кит"
+        })
+        .write()
+        .then(function (post) {
+            res.send(post)
+        });
+});
+
+
+// Тестовая функция чтения таблицы БД
+app.get('/getTest', function (req, res) {
+    const post = db.get('schedule').value();
+    res.send(post);
 });
 
 app.listen(3000, function () {

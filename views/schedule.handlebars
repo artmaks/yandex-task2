@@ -1,0 +1,16 @@
+<table border="1">
+    <tr>
+        <th>Название</th>
+        <th>Лектор</th>
+        <th>Место</th>
+        <th>Дата</th>
+    </tr>
+    {{#each schedule}}
+        <tr>
+            <td>{{this.title}}</td>
+            <td>{{this.teacher}}</td>
+            <td>{{this.place}}</td>
+            <td>{{this.date}}</td>
+        </tr>
+    {{/each}}
+</table>
