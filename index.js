@@ -56,6 +56,12 @@ app.post('/schedule/:id',  function (req, res) {
     res.redirect('/schedule');
 });
 
+// Удалить экземпляр лекции по id
+app.get('/remove_lecture/:id',  function (req, res) {
+    db.get('schedule').remove({ id : req.params.id }).write();
+    res.redirect('/schedule');
+});
+
 // Тестовая инициализация таблицы бд
 app.get('/setTest', function (req, res) {
     db.get('schedule')

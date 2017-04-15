@@ -4,6 +4,7 @@
         <th>Лектор</th>
         <th>Место</th>
         <th>Дата</th>
+        <th>Удалить</th>
     </tr>
     {{#each schedule}}
         <tr>
@@ -13,6 +14,9 @@
             <td>{{this.teacher}}</td>
             <td>{{this.place}}</td>
             <td>{{this.date}}</td>
+            <td>
+                <a href="/remove_lecture/{{this.id}}">Удалить</a>
+            </td>
         </tr>
     {{/each}}
 </table>
