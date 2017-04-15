@@ -1,11 +1,15 @@
 <form action="/schedule/{{lecture.id}}" method="post">
+    {{#if error}}
+        <div class="error">{{error}}</div>
+        <br>
+    {{/if}}
     <div class="form-field">
         <span>Название лекции</span>
         <input value="{{lecture.title}}" name="title" placeholder="Название лекции" required />
     </div>
     <div class="form-field">
         <span>Лектор</span>
-        <input value="{{lecture.teacher}}" name="teacher" placeholder="Лектор" required />
+        <input value="{{lecture.teacherData.name}}" name="teacher" placeholder="Лектор" required />
     </div>
     <div class="form-field">
         <span>Место</span>

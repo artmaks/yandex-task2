@@ -1,4 +1,8 @@
 <form action="/new_lecture" method="post">
+    {{#if error}}
+        <div class="error">{{error}}</div>
+        <br>
+    {{/if}}
     <div class="form-field">
         <span>Название лекции</span>
         <input value="" name="title" placeholder="Название лекции" required />
