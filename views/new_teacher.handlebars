@@ -1,15 +1,15 @@
 <form action="/new_teacher" method="post">
     <div class="form-field">
         <span>Имя лектора</span>
-        <input value="" name="name" placeholder="Имя лектора"/>
+        <input value="" name="name" placeholder="Имя лектора" required />
     </div>
     <div class="form-field">
         <span>Название файла фотографии</span>
-        <input value="" name="photo" placeholder="Фото"/>
+        <input value="" name="photo" placeholder="Фото" required />
     </div>
     <div class="form-field">
         <span>О лекторе</span>
-        <textarea name="about" placeholder="О лекторе"></textarea>
+        <textarea name="about" placeholder="О лекторе" required></textarea>
     </div>
 
     <button type="submit">Добавить</button>
