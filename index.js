@@ -30,11 +30,21 @@ app.get('/schedule', function (req, res) {
     res.render('schedule', { 'schedule' : schedule });
 });
 
+// Страница добавления лекции
+app.get('/new_lecture', function (req, res) {
+    res.render('new_lecture');
+});
+
+// Страница добавления лекции
+app.post('/new_lecture', function (req, res) {
+    db.get('schedule').insert(req.body).write();
+    res.redirect('/schedule');
+});
 
 // Страница редактирования лекции оп id
 app.get('/schedule/:id',  function (req, res) {
     const lecture = db.get('schedule')
-        .find({ id: parseInt(req.params.id) })
+        .find({ id: req.params.id })
         .value();
 
     res.render('lecture', { 'lecture' : lecture });
@@ -42,7 +52,7 @@ app.get('/schedule/:id',  function (req, res) {
 
 // Обновить экземпляр лекции по id
 app.post('/schedule/:id',  function (req, res) {
-    db.get('schedule').find({ id : parseInt(req.params.id) }).assign(req.body).value();
+    db.get('schedule').find({ id : req.params.id }).assign(req.body).write();
     res.redirect('/schedule');
 });
 
