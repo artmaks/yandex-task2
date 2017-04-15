@@ -1,0 +1,20 @@
+<form action="/schedule/{{lecture.id}}" method="post">
+    <div class="form-field">
+        <span>Название лекции</span>
+        <input value="{{lecture.title}}" name="title" placeholder="Название лекции"/>
+    </div>
+    <div class="form-field">
+        <span>Лектор</span>
+        <input value="{{lecture.teacher}}" name="teacher" placeholder="Лектор"/>
+    </div>
+    <div class="form-field">
+        <span>Место</span>
+        <input value="{{lecture.place}}" name="place" placeholder="Место проведения"/>
+    </div>
+    <div class="form-field">
+        <span>Дата</span>
+        <input value="{{lecture.date}}" name="date" placeholder="Дата"/>
+    </div>
+
+    <button type="submit">Сохранить</button>
+</form>

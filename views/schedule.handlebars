@@ -7,7 +7,9 @@
     </tr>
     {{#each schedule}}
         <tr>
-            <td>{{this.title}}</td>
+            <td>
+                <a href="/schedule/{{this.id}}">{{this.title}}</a>
+            </td>
             <td>{{this.teacher}}</td>
             <td>{{this.place}}</td>
             <td>{{this.date}}</td>

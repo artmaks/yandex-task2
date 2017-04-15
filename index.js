@@ -3,10 +3,12 @@ const app = express();
 const low = require('lowdb');
 const fileAsync = require('lowdb/lib/storages/file-async')
 var exphbs = require('express-handlebars');
+var bodyParser = require('body-parser');
 
 const db = low('db.json', {
     storage: fileAsync
 });
+db._.mixin(require('lodash-id'));
 
 db.defaults({ posts: [] })
     .write();
@@ -14,6 +16,8 @@ db.defaults({ posts: [] })
 app.use(express.static(__dirname + '/public'));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Главная страница
 app.get('/', function (req, res) {
@@ -24,6 +28,22 @@ app.get('/', function (req, res) {
 app.get('/schedule', function (req, res) {
     const schedule = db.get('schedule').value();
     res.render('schedule', { 'schedule' : schedule });
+});
+
+
+// Страница редактирования лекции оп id
+app.get('/schedule/:id',  function (req, res) {
+    const lecture = db.get('schedule')
+        .find({ id: parseInt(req.params.id) })
+        .value();
+
+    res.render('lecture', { 'lecture' : lecture });
+});
+
+// Обновить экземпляр лекции по id
+app.post('/schedule/:id',  function (req, res) {
+    db.get('schedule').find({ id : parseInt(req.params.id) }).assign(req.body).value();
+    res.redirect('/schedule');
 });
 
 // Тестовая инициализация таблицы бд
