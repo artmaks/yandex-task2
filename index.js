@@ -27,6 +27,10 @@ app.get('/', function (req, res) {
 // Таблица лекций
 app.get('/schedule', function (req, res) {
     const schedule = db.get('schedule').value();
+    schedule.map(function (lecture) {
+        const teacher = db.get('teachers').find({'name' : lecture.teacher}).value();
+        lecture.teacherData = teacher;
+    });
     res.render('schedule', { 'schedule' : schedule });
 });
 
