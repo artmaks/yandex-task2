@@ -158,27 +158,42 @@ document.addEventListener("DOMContentLoaded", function(event) {
     const dateFrom = document.getElementById('date-from');
     const dateTo = document.getElementById('date-to');
     const showFinished = document.querySelector('.show-finished');
-    const tabItems = Array.prototype.slice.call(tabs.querySelectorAll('.tab')); // convert to real array (for map function)
-
 
     getRequest("http://localhost:3000/api/teachers", function (result) {
         teachers = result;
-        console.log(result);
         showList(list, schedule);
     });
     getRequest("http://localhost:3000/api/places", function (result) {
         places = result;
-        console.log(result);
         showList(list, schedule);
     });
     getRequest("http://localhost:3000/api/schools", function (result) {
         schools = result;
-        console.log(result);
+        Object.keys(schools).map(function (item) {
+            tabs.innerHTML += '<div class="tab" school="' + schools[item].id + '">' + schools[item].title + '</div>'
+        });
+        const tabItems = Array.prototype.slice.call(tabs.querySelectorAll('.tab'));
+        tabItems.map(function (tab) {
+            tab.addEventListener("click", function () {
+                currentSchool = this.getAttribute("school");
+                const searchInputValue = searchInput.value;
+                const dateFromValue = new Date(dateFrom.value);
+                const dateToValue = new Date(dateTo.value);
+
+                const filtered = getFilteredData(schedule, searchInputValue, dateFromValue, dateToValue);
+                showList(list, filtered);
+
+                tabItems.map(function (a) {
+                    a.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+
         showList(list, schedule);
     });
     getRequest("http://localhost:3000/api/schedule", function (result) {
         schedule = result;
-        console.log(result);
         showList(list, schedule);
     });
 
@@ -211,23 +226,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         const filtered = getFilteredData(schedule, searchInputValue, dateFromValue, dateToValue);
         showList(list, filtered);
-    });
-
-    tabItems.map(function (tab) {
-        tab.addEventListener("click", function () {
-            currentSchool = this.getAttribute("school");
-            const searchInputValue = searchInput.value;
-            const dateFromValue = new Date(dateFrom.value);
-            const dateToValue = new Date(dateTo.value);
-
-            const filtered = getFilteredData(schedule, searchInputValue, dateFromValue, dateToValue);
-            showList(list, filtered);
-
-            tabItems.map(function (a) {
-                a.classList.remove('active');
-            });
-            this.classList.add('active');
-        });
     });
 
     showFinished.addEventListener("click", function (event) {
