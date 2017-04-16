@@ -60,6 +60,7 @@ module.exports = function(app, db) {
         lecture.teacherName = teacher ? teacher.name : '';
         lecture.placeTitle = place ? place.title : '';
         lecture.schoolTitle = school ? school.title : '';
+        lecture.dateString = getFormatDate(lecture.date);
     }
 
     // Валидация запроса на изменение / добавление данных
@@ -96,6 +97,17 @@ module.exports = function(app, db) {
             'В школе "' + school.title + '" ' + school.members + ' человек', lecture : req.body });
             return false;
         }
+        if(parseInt(school.members) > parseInt(place.capacity)) {
+            restoreData(req);
+            res.render(page, { error : 'Аудитория "' + place.title + '" вмещает максимум ' + place.capacity + ' человек. ' +
+            'В школе "' + school.title + '" ' + school.members + ' человек', lecture : req.body });
+            return false;
+        }
+        if(!isDate(req.body.date) || !noLessThenToday(req.body.date)) {
+            restoreData(req);
+            res.render(page, { error : 'Дата должна быть в формате (mm/dd/yyyy) и в настоящем времени.', lecture : req.body });
+            return false;
+        }
 
         // Замена имени лектора на id
         req.body.teacher = teacher.id;
@@ -123,4 +135,46 @@ module.exports = function(app, db) {
     function removeLecture(id) {
         return db.get('schedule').remove({id: id}).write();
     }
+
+    // Проверить строку с датой на валидность
+    function isDate(date) {
+        const dateParts = date.split('/');
+        if(dateParts.length !== 3 || parseInt(dateParts[0]) > 12 || parseInt(dateParts[0]) < 1
+            || parseInt(dateParts[1]) > 31 || parseInt(dateParts[1]) < 1 || dateParts[2].length != 4 ) {
+            return false;
+        }
+
+        const dateInstance = new Date(date);
+        return !isNaN(dateInstance.getTime());
+    }
+
+    // Проверить что дата не меньше чем сегодня
+    function noLessThenToday(date) {
+        const today = new Date();
+        const dateInstance = new Date(date);
+        today.setHours(0,0,0,0);
+        dateInstance.setHours(0,0,0,0);
+        return today.getTime() <= dateInstance.getTime();
+    }
+
+    // Дата в строку
+    function getFormatDate(string_date) {
+        const date = new Date(string_date);
+        if(isNaN(date.getTime()))
+            return '';
+
+        var monthNames = [
+            "Января", "Февраля", "Марта",
+            "Апреля", "Мая", "Июня", "Июля",
+            "Августа", "Сентября", "Октября",
+            "Ноября", "Декабря"
+        ];
+
+        var day = date.getDate();
+        var month = date.getMonth();
+        var year = date.getFullYear();
+
+        return day + ' ' + monthNames[month] + ' ' + year;
+    }
+
 };
