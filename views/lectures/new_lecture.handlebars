@@ -5,23 +5,31 @@
     {{/if}}
     <div class="form-field">
         <span>Название лекции</span>
-        <input value="" name="title" placeholder="Название лекции" required />
+        <input value="{{lecture.title}}" name="title" placeholder="Название лекции" required />
     </div>
     <div class="form-field">
         <span>Лектор</span>
-        <input value="" name="teacher" placeholder="Лектор" required/>
+        <input value="{{lecture.teacherName}}" name="teacher" placeholder="Лектор" required/>
     </div>
     <div class="form-field">
         <span>Место проведения</span>
-        <input value="" name="place" placeholder="Место проведения" required/>
+        <input value="{{lecture.placeTitle}}" name="place" placeholder="Место проведения" required/>
     </div>
     <div class="form-field">
         <span>Школа</span>
-        <input value="" name="school" placeholder="Школа" required/>
+        <input value="{{lecture.schoolTitle}}" name="school" placeholder="Школа" required/>
     </div>
     <div class="form-field">
         <span>Дата (mm/dd/yyyy)</span>
-        <input value="" name="date" placeholder="Дата" pattern="[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}" required/>
+        <input value="{{lecture.date}}" name="date" placeholder="Дата" pattern="[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}" required/>
+    </div>
+    <div class="form-field">
+        <span>Время начала лекции (hh:mm)</span>
+        <input value="{{lecture.timeStart}}" name="timeStart" placeholder="Время начала" pattern="[0-9]{2}:[0-9]{2}" required />
+    </div>
+    <div class="form-field">
+        <span>Время конца лекции (hh:mm)</span>
+        <input value="{{lecture.timeEnd}}" name="timeEnd" placeholder="Время конца" pattern="[0-9]{2}:[0-9]{2}" required />
     </div>
 
     <button type="submit">Добавить</button>

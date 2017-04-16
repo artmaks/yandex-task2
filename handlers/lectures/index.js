@@ -110,6 +110,18 @@ module.exports = function(app, db) {
             return false;
         }
 
+        const intersectsLectures = getIntersectsLectures(req.body.place, req.body.date, req.body.timeStart, req.body.timeEnd, req.params.id);
+        if(intersectsLectures.length > 0) {
+            restoreData(req);
+            var response = '';
+            intersectsLectures.map(function (item, key) {
+                if(key !== 0) response += ', ';
+                response += '"' + item.title + '"';
+            });
+            res.render(page, { error : 'К сожалению аудитория "' + req.body.place + '" в это время уже занята следующими лекциями: ' + response, lecture : req.body });
+            return false;
+        }
+
         // Замена имени лектора на id
         req.body.teacher = teacher.id;
         // Замена имени аудитории на id
@@ -200,6 +212,48 @@ module.exports = function(app, db) {
             return -1;
 
         return 0;
+    }
+
+    function getLecturesByPlaceAndDate(place, date) {
+        const place_id = db.get('places').find({'title': place}).value().id;
+        return db.get('schedule').filter({ date: date, place: place_id}).cloneDeep().value();
+    }
+
+    function getIntersectsLectures(place, date, timeStart, timeEnd, id) {
+        const schedule = getLecturesByPlaceAndDate(place, date);
+        const newStart = getDateWithTime(date, timeStart).getTime();
+        const newEnd = getDateWithTime(date, timeEnd).getTime();
+
+        if(!schedule)
+            return [];
+
+        const filtered = schedule.filter(function (item) {
+            const itemStart = getDateWithTime(item.date, item.timeStart).getTime();
+            const itemEnd = getDateWithTime(item.date, item.timeEnd).getTime();
+
+            if(item.id !== id && isIntervalsIntersects(newStart, newEnd, itemStart, itemEnd)) {
+                return true;
+            }
+        });
+
+        return filtered;
+    }
+
+    function getDateWithTime(date, time) {
+        const res = new Date(date);
+        if(time) {
+            const timeSplitted = time.split(':');
+            res.setHours(timeSplitted[0], timeSplitted[1]);
+        }
+        return res;
+    }
+    
+    function isIntervalsIntersects(start1, end1, start2, end2) {
+        if( (start1 >= start2 && start1 <= end2) || (start2 >= start1 && start2 <= end1) ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 };
