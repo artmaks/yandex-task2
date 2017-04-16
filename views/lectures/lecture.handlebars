@@ -27,6 +27,14 @@
         <span>Дата (mm/dd/yyyy)</span>
         <input value="{{lecture.date}}" name="date" placeholder="Дата" pattern="[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}" required />
     </div>
+    <div class="form-field">
+        <span>Время начала лекции (hh:mm)</span>
+        <input value="{{lecture.timeStart}}" name="timeStart" placeholder="Время начала" pattern="[0-9]{2}:[0-9]{2}" required />
+    </div>
+    <div class="form-field">
+        <span>Время конца лекции (hh:mm)</span>
+        <input value="{{lecture.timeEnd}}" name="timeEnd" placeholder="Время конца" pattern="[0-9]{2}:[0-9]{2}" required />
+    </div>
 
     <button type="submit">Сохранить</button>
 </form>

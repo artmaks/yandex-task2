@@ -183,6 +183,16 @@ module.exports = function(app, db) {
         const date1 = new Date(lecture1.date);
         const date2 = new Date(lecture2.date);
 
+        if(lecture1.timeStart) {
+            const time1 = lecture1.timeStart.split(':');
+            date1.setHours(time1[0], time1[1]);
+        }
+
+        if(lecture2.timeStart) {
+            const time2 = lecture2.timeStart.split(':');
+            date2.setHours(time2[0], time2[1]);
+        }
+
         if(date1.getTime() > date2.getTime())
             return 1;
 
