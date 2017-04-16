@@ -2,7 +2,7 @@ module.exports = function(app, db) {
     // Получить все лекции
     app.get('/api/schedule', function (req, res) {
         const schedule = db.get('schedule').cloneDeep().value();
-        res.send(schedule);
+        res.send(schedule.sort(dateComparatorForLectures));
     });
 
     app.get('/api/schools', function (req, res) {
@@ -26,5 +26,28 @@ module.exports = function(app, db) {
             result[val.id] = val;
         });
         return result;
+    }
+
+    function dateComparatorForLectures(lecture1, lecture2) {
+        const date1 = new Date(lecture1.date);
+        const date2 = new Date(lecture2.date);
+
+        if(lecture1.timeStart) {
+            const time1 = lecture1.timeStart.split(':');
+            date1.setHours(time1[0], time1[1]);
+        }
+
+        if(lecture2.timeStart) {
+            const time2 = lecture2.timeStart.split(':');
+            date2.setHours(time2[0], time2[1]);
+        }
+
+        if(date1.getTime() > date2.getTime())
+            return 1;
+
+        if(date1.getTime() < date2.getTime())
+            return -1;
+
+        return 0;
     }
 };
