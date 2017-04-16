@@ -54,12 +54,17 @@ module.exports = function(app, db) {
 
     // Аналог JOIN в SQL (присоединить данные лектора и аудитории к лекции)
     function joinTeacherAndPlace(lecture) {
+        const schools = [];
+        lecture.school.map(function (id) {
+            const school = db.get('schools').find({'id': id}).value();
+            schools.push(school);
+        });
+
         const teacher = db.get('teachers').find({'id': lecture.teacher}).value();
         const place = db.get('places').find({'id': lecture.place}).value();
-        const school = db.get('schools').find({'id': lecture.school}).value();
         lecture.teacherName = teacher ? teacher.name : '';
         lecture.placeTitle = place ? place.title : '';
-        lecture.schoolTitle = school ? school.title : '';
+        lecture.schoolsData = schools ? schools : [];
         lecture.dateString = getFormatDate(lecture.date);
         lecture.status = noLessThenToday(lecture.date) ? 'Будет' : 'Закончилась';
     }
@@ -68,14 +73,29 @@ module.exports = function(app, db) {
     function validateLectureRequest(req, res, page) {
         const teacher = db.get('teachers').find({ name : req.body.teacher }).value();
         const place = db.get('places').find({ title : req.body.place }).value();
-        const school = db.get('schools').find({ title : req.body.school }).value();
 
         const restoreData = function (req) {
             req.body.teacherName = req.body.teacher;
             req.body.placeTitle = req.body.place;
-            req.body.schoolTitle = req.body.school;
+            req.body.schoolInput = req.body.school;
             req.body.id = req.params.id;
         };
+
+        const schools = [];
+        var schoolMembers = 0;
+        const schoolTitles = req.body.school.split(',').filter(function(el) {return el.length != 0});
+        for(var i = 0; i < schoolTitles.length; i++) {
+            const title = schoolTitles[i].trim();
+            const school = db.get('schools').find({ title : title }).value();
+
+            if(!school) {
+                restoreData(req);
+                res.render(page, { error : 'Школы с именем "' + title + '" не существует в базе', lecture : req.body, 'schedulePage' : true });
+                return false;
+            }
+            schools.push(school.id);
+            schoolMembers += parseInt(school.members);
+        }
 
         if(!teacher) {
             restoreData(req);
@@ -87,21 +107,10 @@ module.exports = function(app, db) {
             res.render(page, { error : 'Аудитории с именем "' + req.body.place + '" не существует в базе', lecture : req.body, 'schedulePage' : true });
             return false;
         }
-        if(!school) {
-            restoreData(req);
-            res.render(page, { error : 'Школы с именем "' + req.body.school + '" не существует в базе', lecture : req.body, 'schedulePage' : true });
-            return false;
-        }
-        if(parseInt(school.members) > parseInt(place.capacity)) {
+        if(schoolMembers > parseInt(place.capacity)) {
             restoreData(req);
             res.render(page, { error : 'Аудитория "' + place.title + '" вмещает максимум ' + place.capacity + ' человек. ' +
-            'В школе "' + school.title + '" ' + school.members + ' человек', lecture : req.body, 'schedulePage' : true });
-            return false;
-        }
-        if(parseInt(school.members) > parseInt(place.capacity)) {
-            restoreData(req);
-            res.render(page, { error : 'Аудитория "' + place.title + '" вмещает максимум ' + place.capacity + ' человек. ' +
-            'В школе "' + school.title + '" ' + school.members + ' человек', lecture : req.body, 'schedulePage' : true });
+            'В выбранных школах ' + schoolMembers + ' человек', lecture : req.body, 'schedulePage' : true });
             return false;
         }
         if(!isDate(req.body.date) || !noLessThenToday(req.body.date)) {
@@ -127,7 +136,7 @@ module.exports = function(app, db) {
         // Замена имени аудитории на id
         req.body.place = place.id;
         // Замена имени аудитории на id
-        req.body.school = school.id;
+        req.body.school = schools;
 
         return req;
     }

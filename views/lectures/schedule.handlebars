@@ -22,7 +22,7 @@
                 <a href="/admin/places/{{this.place}}">{{this.placeTitle}}</a>
             </td>
             <td>
-                <a href="/admin/schools/{{this.school}}">{{this.schoolTitle}}</a>
+                {{#each schoolsData}}<a href="/admin/schools/{{this.id}}">{{this.title}}</a><br>{{/each}}
             </td>
             <td>{{this.dateString}}</td>
             <td>{{this.timeStart}}</td>

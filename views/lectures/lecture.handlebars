@@ -21,7 +21,7 @@
     </div>
     <div class="form-field">
         <span>Школа</span>
-        <input value="{{lecture.schoolTitle}}" name="school" placeholder="Школа" required />
+        <input value="{{#each lecture.schoolsData}}{{this.title}},{{/each}}{{lecture.schoolInput}}" name="school" placeholder="Школа" required />
     </div>
     <div class="form-field">
         <span>Дата (mm/dd/yyyy)</span>
