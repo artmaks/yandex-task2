@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Главная страница
 app.get('/', function (req, res) {
-    res.render('home');
+    res.render('home', { homePage: true });
 });
 
 require('./handlers/lectures')(app, db);

@@ -2,12 +2,12 @@ module.exports = function(app, db) {
     // Таблица лекторов
     app.get('/teachers', function (req, res) {
         const teachers = db.get('teachers').value();
-        res.render('teachers/teachers', {'teachers': teachers});
+        res.render('teachers/teachers', {'teachers': teachers, 'teachersPage' : true});
     });
 
     // Страница добавления лектора
     app.get('/new_teacher', function (req, res) {
-        res.render('teachers/new_teacher');
+        res.render('teachers/new_teacher', {'teachersPage' : true});
     });
 
     // Обработка добавления лектора
@@ -23,7 +23,7 @@ module.exports = function(app, db) {
             .find({id: req.params.id})
             .value();
 
-        res.render('teachers/teacher', {'teacher': teacher, 'updated' : req.query.updated});
+        res.render('teachers/teacher', {'teacher': teacher, 'updated' : req.query.updated, 'teachersPage' : true});
     });
 
     // Обновить экземпляр лектора по id

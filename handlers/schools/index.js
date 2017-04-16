@@ -2,12 +2,12 @@ module.exports = function(app, db) {
     // Таблица школ
     app.get('/schools', function (req, res) {
         const schools = db.get('schools').value();
-        res.render('schools/schools', {'schools': schools});
+        res.render('schools/schools', {'schools': schools, 'schoolsPage' : true});
     });
 
     // Страница добавления школы
     app.get('/new_school', function (req, res) {
-        res.render('schools/new_school');
+        res.render('schools/new_school', {'schoolsPage' : true});
     });
 
     // Обработка добавления школы
@@ -23,7 +23,7 @@ module.exports = function(app, db) {
             .find({id: req.params.id})
             .value();
 
-        res.render('schools/school', {'school': school, 'updated' : req.query.updated});
+        res.render('schools/school', {'school': school, 'updated' : req.query.updated, 'schoolsPage' : true});
     });
 
     // Обновить экземпляр школы по id

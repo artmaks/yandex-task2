@@ -3,28 +3,30 @@
 <head>
     <meta charset="utf-8">
     <title>Управление расписанием</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
 <body>
-    <ul>
-        <li>
-            <a href="/">Главная страница</a>
+    <ul class="menu">
+        <li {{#if homePage}}class="active"{{/if}}>
+            <a href="/">Главная</a>
         </li>
-        <li>
+        <li {{#if schedulePage}}class="active"{{/if}}>
             <a href="/schedule">Расписание</a>
         </li>
-        <li>
+        <li {{#if teachersPage}}class="active"{{/if}}>
             <a href="/teachers">Лекторы</a>
         </li>
-        <li>
+        <li {{#if placesPage}}class="active"{{/if}}>
             <a href="/places">Аудитории</a>
         </li>
-        <li>
+        <li {{#if schoolsPage}}class="active"{{/if}}>
             <a href="/schools">Школы</a>
         </li>
     </ul>
 
-    {{{body}}}
+    <div class="container">
+        {{{body}}}
+    </div>
 
 </body>
 </html>

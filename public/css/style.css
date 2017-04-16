@@ -1,3 +1,44 @@
 body {
+    margin: 0;
+}
 
+ul.menu {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+ul.menu li {
+    display: inline-block;
+}
+
+ul.menu li a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+ul.menu li.active {
+    background-color: #959595;
+}
+
+ul.menu li:hover {
+    cursor: pointer;
+    background-color: #959595;
+}
+
+ul.menu li a:hover {
+    cursor: pointer;
+}
+
+.container {
+    margin-top: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
 }

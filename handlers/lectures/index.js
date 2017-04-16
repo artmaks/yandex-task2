@@ -5,12 +5,12 @@ module.exports = function(app, db) {
         schedule.map(function (lecture) {
             joinTeacherAndPlace(lecture);
         });
-        res.render('lectures/schedule', {'schedule': schedule});
+        res.render('lectures/schedule', {'schedule': schedule, 'schedulePage' : true});
     });
 
     // Страница добавления лекции
     app.get('/new_lecture', function (req, res) {
-        res.render('lectures/new_lecture');
+        res.render('lectures/new_lecture', {'schedulePage' : true});
     });
 
     // Обработка добавления лекции
@@ -30,7 +30,7 @@ module.exports = function(app, db) {
         joinTeacherAndPlace(lecture);
 
 
-        res.render('lectures/lecture', {'lecture': lecture, 'updated' : req.query.updated});
+        res.render('lectures/lecture', {'lecture': lecture, 'updated' : req.query.updated, 'schedulePage' : true});
     });
 
     // Обновить экземпляр лекции по id
@@ -79,34 +79,34 @@ module.exports = function(app, db) {
 
         if(!teacher) {
             restoreData(req);
-            res.render(page, { error : 'Лектора с именем "' + req.body.teacher + '" не существует в базе', lecture : req.body });
+            res.render(page, { error : 'Лектора с именем "' + req.body.teacher + '" не существует в базе', lecture : req.body, 'schedulePage' : true });
             return false;
         }
         if(!place) {
             restoreData(req);
-            res.render(page, { error : 'Аудитории с именем "' + req.body.place + '" не существует в базе', lecture : req.body });
+            res.render(page, { error : 'Аудитории с именем "' + req.body.place + '" не существует в базе', lecture : req.body, 'schedulePage' : true });
             return false;
         }
         if(!school) {
             restoreData(req);
-            res.render(page, { error : 'Школы с именем "' + req.body.school + '" не существует в базе', lecture : req.body });
+            res.render(page, { error : 'Школы с именем "' + req.body.school + '" не существует в базе', lecture : req.body, 'schedulePage' : true });
             return false;
         }
         if(parseInt(school.members) > parseInt(place.capacity)) {
             restoreData(req);
             res.render(page, { error : 'Аудитория "' + place.title + '" вмещает максимум ' + place.capacity + ' человек. ' +
-            'В школе "' + school.title + '" ' + school.members + ' человек', lecture : req.body });
+            'В школе "' + school.title + '" ' + school.members + ' человек', lecture : req.body, 'schedulePage' : true });
             return false;
         }
         if(parseInt(school.members) > parseInt(place.capacity)) {
             restoreData(req);
             res.render(page, { error : 'Аудитория "' + place.title + '" вмещает максимум ' + place.capacity + ' человек. ' +
-            'В школе "' + school.title + '" ' + school.members + ' человек', lecture : req.body });
+            'В школе "' + school.title + '" ' + school.members + ' человек', lecture : req.body, 'schedulePage' : true });
             return false;
         }
         if(!isDate(req.body.date) || !noLessThenToday(req.body.date)) {
             restoreData(req);
-            res.render(page, { error : 'Дата должна быть в формате (mm/dd/yyyy) и в настоящем времени.', lecture : req.body });
+            res.render(page, { error : 'Дата должна быть в формате (mm/dd/yyyy) и в настоящем времени.', lecture : req.body, 'schedulePage' : true });
             return false;
         }
 
@@ -118,7 +118,7 @@ module.exports = function(app, db) {
                 if(key !== 0) response += ', ';
                 response += '"' + item.title + '"';
             });
-            res.render(page, { error : 'К сожалению аудитория "' + req.body.place + '" в это время уже занята следующими лекциями: ' + response, lecture : req.body });
+            res.render(page, { error : 'К сожалению аудитория "' + req.body.place + '" в это время уже занята следующими лекциями: ' + response, lecture : req.body, 'schedulePage' : true });
             return false;
         }
 

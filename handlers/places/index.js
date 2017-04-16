@@ -2,12 +2,12 @@ module.exports = function(app, db) {
     // Таблица аудиторий
     app.get('/places', function (req, res) {
         const places = db.get('places').value();
-        res.render('places/places', {'places': places});
+        res.render('places/places', {'places': places, 'placesPage' : true});
     });
 
     // Страница добавления аудитории
     app.get('/new_place', function (req, res) {
-        res.render('places/new_place');
+        res.render('places/new_place', {'placesPage' : true});
     });
 
     // Обработка добавления аудитории
@@ -23,7 +23,7 @@ module.exports = function(app, db) {
             .find({id: req.params.id})
             .value();
 
-        res.render('places/place', {'place': place, 'updated' : req.query.updated});
+        res.render('places/place', {'place': place, 'updated' : req.query.updated, 'placesPage' : true});
     });
 
     // Обновить экземпляр аудитории по id
