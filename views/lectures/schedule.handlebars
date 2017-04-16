@@ -5,6 +5,7 @@
         <th>Место</th>
         <th>Школа</th>
         <th>Дата</th>
+        <th>Статус</th>
         <th>Удалить</th>
     </tr>
     {{#each schedule}}
@@ -22,6 +23,7 @@
                 <a href="/schools/{{this.school}}">{{this.schoolTitle}}</a>
             </td>
             <td>{{this.dateString}}</td>
+            <td>{{this.status}}</td>
             <td>
                 <a href="/remove_lecture/{{this.id}}">Удалить</a>
             </td>

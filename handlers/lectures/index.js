@@ -1,7 +1,7 @@
 module.exports = function(app, db) {
     // Таблица лекций
     app.get('/schedule', function (req, res) {
-        const schedule = getSchedule();
+        const schedule = getSchedule(true);
         schedule.map(function (lecture) {
             joinTeacherAndPlace(lecture);
         });
@@ -61,6 +61,7 @@ module.exports = function(app, db) {
         lecture.placeTitle = place ? place.title : '';
         lecture.schoolTitle = school ? school.title : '';
         lecture.dateString = getFormatDate(lecture.date);
+        lecture.status = noLessThenToday(lecture.date) ? 'Будет' : 'Закончилась';
     }
 
     // Валидация запроса на изменение / добавление данных
@@ -128,8 +129,9 @@ module.exports = function(app, db) {
     }
 
     // Получить все лекции из БД
-    function getSchedule() {
-        return db.get('schedule').cloneDeep().value();
+    function getSchedule(sorted) {
+        const schedule = db.get('schedule').cloneDeep().value();
+        return sorted ? schedule.sort(dateComparatorForLectures) : schedule;
     }
 
     function removeLecture(id) {
@@ -175,6 +177,19 @@ module.exports = function(app, db) {
         var year = date.getFullYear();
 
         return day + ' ' + monthNames[month] + ' ' + year;
+    }
+
+    function dateComparatorForLectures(lecture1, lecture2) {
+        const date1 = new Date(lecture1.date);
+        const date2 = new Date(lecture2.date);
+
+        if(date1.getTime() > date2.getTime())
+            return 1;
+
+        if(date1.getTime() < date2.getTime())
+            return -1;
+
+        return 0;
     }
 
 };
