@@ -166,15 +166,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
     const dateTo = document.getElementById('date-to');
     const showFinished = document.querySelector('.show-finished');
 
-    getRequest("http://localhost:3000/api/teachers", function (result) {
+    getRequest("/api/teachers", function (result) {
         teachers = result;
         showList(list, schedule);
     });
-    getRequest("http://localhost:3000/api/places", function (result) {
+    getRequest("/api/places", function (result) {
         places = result;
         showList(list, schedule);
     });
-    getRequest("http://localhost:3000/api/schools", function (result) {
+    getRequest("/api/schools", function (result) {
         schools = result;
         Object.keys(schools).map(function (item) {
             tabs.innerHTML += '<div class="tab" school="' + schools[item].id + '">' + schools[item].title + '</div>'
@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         showList(list, schedule);
     });
-    getRequest("http://localhost:3000/api/schedule", function (result) {
+    getRequest("/api/schedule", function (result) {
         schedule = result;
         showList(list, schedule);
     });
