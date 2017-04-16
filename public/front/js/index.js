@@ -45,7 +45,7 @@ function getScheduleForTeacher(data, name) {
 
 function getScheduleForSchool(data) {
     return data.filter(function (a) {
-        if(a.school.indexOf(currentSchool) !== -1) {
+        if(a.school.join(',').indexOf(currentSchool) !== -1) {
             return true;
         }
     });
@@ -107,8 +107,15 @@ function setupItem(item, data) {
         tooltip.parentNode.removeChild(tooltip);
     }
 
+    var schoolTitle = '';
+    data.school.map(function (item) {
+        schoolTitle += schools[item].title + ', ';
+    });
+    // Удалить лишнюю запятую
+    schoolTitle = schoolTitle.substring(0, schoolTitle.length - 1);
+
     setHTML(title, data.title);
-    setHTML(school, schools[data.school].title);
+    setHTML(school, schoolTitle);
     setHTML(teacher, teachers[data.teacher].name);
     setHTML(place, places[data.place].title);
     setHTML(date, strDate);
