@@ -37,6 +37,7 @@ require('./handlers/schools')(app, db);
 // API handlers
 require('./handlers/api')(app, db);
 
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
+const port = process.env.PORT || 5000;
+app.listen(port, function() {
+    console.log('Listening on ' + port);
 });
