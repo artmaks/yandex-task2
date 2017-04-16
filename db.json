@@ -1,0 +1,39 @@
+{
+  "schedule": [
+
+    {
+      "title": "1 лекция. Вводная",
+      "teacher": "449be5ee-7921-49ad-b863-e86944749e8d",
+      "place": "ebeb1ef6-1021-40e0-9df8-e0aad6373bc8",
+      "school": [
+        "3e899424-6ed7-4001-b2b9-c8b30373a24b"
+      ],
+      "date": "04/20/2017",
+      "timeStart": "12:00",
+      "timeEnd": "13:00",
+      "id": "cbf5ba76-5e0f-4170-b1cb-b58d27decbab"
+    }
+  ],
+  "teachers": [
+    {
+      "name": "Артем Максимов",
+      "photo": "artem.jpeg",
+      "about": "Студент",
+      "id": "449be5ee-7921-49ad-b863-e86944749e8d"
+    }
+  ],
+  "places": [
+    {
+      "title": "Синий кит",
+      "capacity": "30",
+      "id": "ebeb1ef6-1021-40e0-9df8-e0aad6373bc8"
+    }
+  ],
+  "schools": [
+    {
+      "title": "Фронтенд разработка",
+      "members": "12",
+      "id": "3e899424-6ed7-4001-b2b9-c8b30373a24b"
+    }
+  ]
+}
