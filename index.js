@@ -29,6 +29,9 @@ require('./handlers/places')(app, db);
 require('./handlers/teachers')(app, db);
 require('./handlers/schools')(app, db);
 
+// API handlers
+require('./handlers/api')(app, db);
+
 // Тестовая инициализация таблицы бд
 app.get('/setTest', function (req, res) {
     db.get('schedule')
