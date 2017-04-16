@@ -37,7 +37,7 @@ function getFormatDate(date) {
 
 function getScheduleForTeacher(data, name) {
     return data.filter(function (a) {
-        if(a.teacher.indexOf(name) !== -1) {
+        if(teachers[a.teacher].name.toLowerCase().indexOf(name.toLowerCase()) !== -1) {
             return true;
         }
     });
@@ -238,7 +238,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     showFinished.addEventListener("click", function (event) {
         event.preventDefault();
         showFinishedLectures = !showFinishedLectures;
-        console.log(showFinishedLectures)
         this.text = showFinishedLectures ? 'Скрыть прошедшие лекции' : 'Показать прошедшие лекции';
 
         const searchInputValue = searchInput.value;
