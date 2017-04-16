@@ -13,7 +13,7 @@ module.exports = function(app, db) {
     // Обработка добавления лектора
     app.post('/admin/new_teacher', function (req, res) {
         db.get('teachers').insert(req.body).write().then(function (result) {
-            res.redirect('/admin/teachers/' + result.id);
+            res.redirect('/admin/teachers/' + result.id + '/?updated=true');
         });
     });
 

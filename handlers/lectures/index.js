@@ -20,7 +20,7 @@ module.exports = function(app, db) {
             return;
 
         db.get('schedule').insert(req.body).write().then(function (result) {
-            res.redirect('/admin/schedule/' + result.id);
+            res.redirect('/admin/schedule/' + result.id + '/?updated=true');
         });
     });
 

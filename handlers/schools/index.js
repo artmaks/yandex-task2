@@ -13,7 +13,7 @@ module.exports = function(app, db) {
     // Обработка добавления школы
     app.post('/admin/new_school', function (req, res) {
         db.get('schools').insert(req.body).write().then(function (result) {
-            res.redirect('/admin/schools/' + result.id);
+            res.redirect('/admin/schools/' + result.id + '/?updated=true');
         });
     });
 

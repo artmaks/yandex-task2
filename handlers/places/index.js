@@ -11,9 +11,9 @@ module.exports = function(app, db) {
     });
 
     // Обработка добавления аудитории
-    app.post('/new_place', function (req, res) {
+    app.post('/admin/new_place', function (req, res) {
         db.get('places').insert(req.body).write().then(function (result) {
-            res.redirect('/admin/places/' + result.id);
+            res.redirect('/admin/places/' + result.id + '/?updated=true');
         });
     });
 

@@ -10,7 +10,7 @@ const db = low('db.json', {
 });
 db._.mixin(require('lodash-id'));
 
-db.defaults({ posts: [] })
+db.defaults({ schedule: [], teachers: [], places: [], schools: [] })
     .write();
 
 app.use(express.static(__dirname + '/public'));
