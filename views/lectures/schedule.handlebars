@@ -13,27 +13,27 @@
     {{#each schedule}}
         <tr>
             <td>
-                <a href="/schedule/{{this.id}}">{{this.title}}</a>
+                <a href="/admin/schedule/{{this.id}}">{{this.title}}</a>
             </td>
             <td>
-                <a href="/teachers/{{this.teacher}}">{{this.teacherName}}</a>
+                <a href="/admin/teachers/{{this.teacher}}">{{this.teacherName}}</a>
             </td>
             <td>
-                <a href="/places/{{this.place}}">{{this.placeTitle}}</a>
+                <a href="/admin/places/{{this.place}}">{{this.placeTitle}}</a>
             </td>
             <td>
-                <a href="/schools/{{this.school}}">{{this.schoolTitle}}</a>
+                <a href="/admin/schools/{{this.school}}">{{this.schoolTitle}}</a>
             </td>
             <td>{{this.dateString}}</td>
             <td>{{this.timeStart}}</td>
             <td>{{this.timeEnd}}</td>
             <td>{{this.status}}</td>
             <td>
-                <a class="remove_link" href="/remove_lecture/{{this.id}}">Удалить</a>
+                <a class="remove_link" href="/admin/remove_lecture/{{this.id}}">Удалить</a>
             </td>
         </tr>
     {{/each}}
 </table>
 
 <br>
-<a class="new_link" href="/new_lecture">Добавить лекцию</a>
+<a class="new_link" href="/admin/new_lecture">Добавить лекцию</a>

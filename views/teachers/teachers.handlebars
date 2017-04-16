@@ -8,16 +8,16 @@
     {{#each teachers}}
         <tr>
             <td>
-                <a href="/teachers/{{this.id}}">{{this.name}}</a>
+                <a href="/admin/teachers/{{this.id}}">{{this.name}}</a>
             </td>
             <td>{{this.photo}}</td>
             <td>{{this.about}}</td>
             <td>
-                <a class="remove_link" href="/remove_teacher/{{this.id}}">Удалить</a>
+                <a class="remove_link" href="/admin/remove_teacher/{{this.id}}">Удалить</a>
             </td>
         </tr>
     {{/each}}
 </table>
 
 <br>
-<a class="new_link" href="/new_teacher">Добавить лектора</a>
+<a class="new_link" href="/admin/new_teacher">Добавить лектора</a>

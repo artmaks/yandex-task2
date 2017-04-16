@@ -1,6 +1,6 @@
 module.exports = function(app, db) {
     // Таблица лекций
-    app.get('/schedule', function (req, res) {
+    app.get('/admin/schedule', function (req, res) {
         const schedule = getSchedule(true);
         schedule.map(function (lecture) {
             joinTeacherAndPlace(lecture);
@@ -9,23 +9,23 @@ module.exports = function(app, db) {
     });
 
     // Страница добавления лекции
-    app.get('/new_lecture', function (req, res) {
+    app.get('/admin/new_lecture', function (req, res) {
         res.render('lectures/new_lecture', {'schedulePage' : true});
     });
 
     // Обработка добавления лекции
-    app.post('/new_lecture', function (req, res) {
+    app.post('/admin/new_lecture', function (req, res) {
         req = validateLectureRequest(req, res, 'lectures/new_lecture');
         if(!req)
             return;
 
         db.get('schedule').insert(req.body).write().then(function (result) {
-            res.redirect('/schedule/' + result.id);
+            res.redirect('/admin/schedule/' + result.id);
         });
     });
 
     // Страница редактирования лекции по id
-    app.get('/schedule/:id', function (req, res) {
+    app.get('/admin/schedule/:id', function (req, res) {
         const lecture = getLectureById(req.params.id);
         joinTeacherAndPlace(lecture);
 
@@ -34,20 +34,20 @@ module.exports = function(app, db) {
     });
 
     // Обновить экземпляр лекции по id
-    app.post('/schedule/:id', function (req, res) {
+    app.post('/admin/schedule/:id', function (req, res) {
         req = validateLectureRequest(req, res, 'lectures/lecture');
         if(!req)
             return;
 
         db.get('schedule').find({id: req.params.id}).assign(req.body).write().then(function (result) {
-            res.redirect('/schedule/' + result.id + '/?updated=true');
+            res.redirect('/admin/schedule/' + result.id + '/?updated=true');
         });
     });
 
     // Удалить экземпляр лекции по id
-    app.get('/remove_lecture/:id', function (req, res) {
+    app.get('/admin/remove_lecture/:id', function (req, res) {
         removeLecture(req.params.id);
-        res.redirect('/schedule');
+        res.redirect('/admin/schedule');
     });
 
     // --------- utils -----------

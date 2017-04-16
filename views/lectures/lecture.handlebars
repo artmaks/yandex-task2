@@ -1,10 +1,10 @@
-<form action="/schedule/{{lecture.id}}" method="post">
+<form action="/admin/schedule/{{lecture.id}}" method="post">
     {{#if error}}
         <div class="error">{{error}}</div>
         <br>
     {{/if}}
     {{#if updated}}
-        <div class="message">Запись успешно сохранена. <a href="/schedule">Вернуться к лекциям</a></div>
+        <div class="message">Запись успешно сохранена. <a href="/admin/schedule">Вернуться к лекциям</a></div>
         <br>
     {{/if}}
     <div class="form-field">

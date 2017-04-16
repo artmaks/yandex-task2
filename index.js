@@ -19,9 +19,14 @@ app.set('view engine', 'handlebars');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Главная страница
+// Главная страница расписания
 app.get('/', function (req, res) {
-    res.render('home', { homePage: true });
+    res.render('home', {layout : 'front'});
+});
+
+// Главная страница админ панели
+app.get('/admin', function (req, res) {
+    res.render('home', {homePage: true});
 });
 
 require('./handlers/lectures')(app, db);
@@ -31,28 +36,6 @@ require('./handlers/schools')(app, db);
 
 // API handlers
 require('./handlers/api')(app, db);
-
-// Тестовая инициализация таблицы бд
-app.get('/setTest', function (req, res) {
-    db.get('schedule')
-        .push({
-            title: "Лекция 1. Адаптивная вёрстка",
-            school: "Школа разработки интерфейсов",
-            teacher: "Дмитрий Душкин",
-            date: "03/03/2017",
-            place: "Синий кит"
-        })
-        .write()
-        .then(function (post) {
-            res.send(post)
-        });
-});
-
-// Тестовая функция чтения таблицы БД
-app.get('/getTest', function (req, res) {
-    const post = db.get('schedule').value();
-    res.send(post);
-});
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');

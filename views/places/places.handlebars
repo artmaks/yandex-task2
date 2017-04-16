@@ -7,15 +7,15 @@
     {{#each places}}
         <tr>
             <td>
-                <a href="/places/{{this.id}}">{{this.title}}</a>
+                <a href="/admin/places/{{this.id}}">{{this.title}}</a>
             </td>
             <td>{{this.capacity}}</td>
             <td>
-                <a class="remove_link" href="/remove_place/{{this.id}}">Удалить</a>
+                <a class="remove_link" href="/admin/remove_place/{{this.id}}">Удалить</a>
             </td>
         </tr>
     {{/each}}
 </table>
 
 <br>
-<a class="new_link" href="/new_place">Добавить аудиторию</a>
+<a class="new_link" href="/admin/new_place">Добавить аудиторию</a>

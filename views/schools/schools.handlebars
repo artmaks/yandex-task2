@@ -7,15 +7,15 @@
     {{#each schools}}
         <tr>
             <td>
-                <a href="/schools/{{this.id}}">{{this.title}}</a>
+                <a href="/admin/schools/{{this.id}}">{{this.title}}</a>
             </td>
             <td>{{this.members}}</td>
             <td>
-                <a class="remove_link" href="/remove_school/{{this.id}}">Удалить</a>
+                <a class="remove_link" href="/admin/remove_school/{{this.id}}">Удалить</a>
             </td>
         </tr>
     {{/each}}
 </table>
 
 <br>
-<a class="new_link" href="/new_school">Добавить школу</a>
+<a class="new_link" href="/admin/new_school">Добавить школу</a>

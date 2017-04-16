@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Расписание</title>
+    <link rel="stylesheet" type="text/css" href="/front/styles/style.css">
+    <link rel="stylesheet" type="text/css" href="/front/styles/icons.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Расписание</h1>
+    </header>
+
+    <div class="row full-height">
+        <div class="filters">
+            <form id="filters-form">
+                <input class="filter-search" id="search-input" type="text" placeholder="Преподаватель"/>
+                <div class="filter-dates">
+                    <span>С</span>
+                    <input class="filter-date" id="date-from" type="date" placeholder="Дата"/>
+                    <span>По</span>
+                    <input class="filter-date" id="date-to" type="date" placeholder="Дата"/>
+                </div>
+            </form>
+        </div>
+        <div class="tabs" id="tabs">
+            <div class="tab active" school="">
+                Все школы
+            </div>
+            <div class="tab" school="Школа разработки интерфейсов">
+                Школа разработки интерфейсов
+            </div>
+            <div class="tab" school="Школа мобильной разработки">
+                Школа мобильной разработки
+            </div>
+            <div class="tab" school="Школа дизайна">
+                Школа дизайна
+            </div>
+            <div class="tab" school="Школа менеджмента">
+                Школа менеджмента
+            </div>
+        </div>
+        <a class="show-finished" href="">Показать прошедшие</a>
+        <div class="list" id="list">
+
+        </div>
+    </div>
+</div>
+<script src="/front/js/index.js"></script>
+<div class="item" id="template-item">
+    <span class="title"></span>
+    <div class="item-row">
+        <span class="school"></span>
+        <span class="teacher tooltip">
+                <span class="teacher-text">Иван Карев</span>
+                <span class="tooltiptext">
+                    <img class="teacher-photo" src="" style="max-width: 100px" />
+                    <span class="name"></span>
+                    <span class="about">
+
+                    </span>
+                </span>
+            </span>
+    </div>
+    <span class="date">
+            <span class="date-text"></span>
+            <span class="icon-date"></span>
+        </span>
+    <span class="place">
+            <span class="place-text"></span>
+            <span class="icon-place"></span>
+        </span>
+    <span class="materials">
+            <span class="materials-text"></span>
+            <span class="icon-materials" style="display: none;"></span>
+        </span>
+</div>
+</body>
+</html>
