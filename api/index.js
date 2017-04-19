@@ -35,11 +35,19 @@ class ScheduleAPI {
         return this.getById('schedule', id);
     }
 
+    addLecture(data) {
+        return this.add('schedule', data);
+    }
+
     removeLecture(id) {
         this.db.get('schedule').remove({id: id}).write();
         return true;
     }
 
+    setLecture(id, data) {
+        return this.set('schedule', id, data);
+    }
+    
     getFullInfoLecture(id) {
         const lecture = this.getLecture(id);
         this.joinTeacherAndPlace(lecture);

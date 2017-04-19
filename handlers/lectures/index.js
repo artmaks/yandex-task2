@@ -20,7 +20,7 @@ module.exports = function(app, db) {
         if(!req)
             return;
 
-        db.get('schedule').insert(req.body).write().then(function (result) {
+        api.addLecture(req.body).then(function (result) {
             res.redirect('/admin/schedule/' + result.id + '/?updated=true');
         });
     });
@@ -38,7 +38,7 @@ module.exports = function(app, db) {
         if(!req)
             return;
 
-        db.get('schedule').find({id: req.params.id}).assign(req.body).write().then(function (result) {
+        api.setLecture(req.params.id, req.body).then(function (result) {
             res.redirect('/admin/schedule/' + result.id + '/?updated=true');
         });
     });
