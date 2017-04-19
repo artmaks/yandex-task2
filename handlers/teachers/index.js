@@ -1,7 +1,10 @@
 module.exports = function(app, db) {
+    const ScheduleAPI = require('../../api');
+    const api = new ScheduleAPI(db);
+
     // Таблица лекторов
     app.get('/admin/teachers', function (req, res) {
-        const teachers = db.get('teachers').value();
+        const teachers = api.getTeachers();
         res.render('teachers/teachers', {'teachers': teachers, 'teachersPage' : true});
     });
 
@@ -12,30 +15,28 @@ module.exports = function(app, db) {
 
     // Обработка добавления лектора
     app.post('/admin/new_teacher', function (req, res) {
-        db.get('teachers').insert(req.body).write().then(function (result) {
+        api.addTeacher(req.body).then(function (result) {
             res.redirect('/admin/teachers/' + result.id + '/?updated=true');
         });
     });
 
     // Страница редактирования лектора по id
     app.get('/admin/teachers/:id', function (req, res) {
-        const teacher = db.get('teachers')
-            .find({id: req.params.id})
-            .value();
+        const teacher = api.getTeacher(req.params.id);
 
         res.render('teachers/teacher', {'teacher': teacher, 'updated' : req.query.updated, 'teachersPage' : true});
     });
 
     // Обновить экземпляр лектора по id
     app.post('/admin/teachers/:id', function (req, res) {
-        db.get('teachers').find({id: req.params.id}).assign(req.body).write().then(function (result) {
+        api.setTeacher(req.params.id, req.body).then(function (result) {
             res.redirect('/admin/teachers/' + result.id + '/?updated=true');
         });
     });
 
     // Удалить экземпляр лектора по id
     app.get('/admin/remove_teacher/:id', function (req, res) {
-        db.get('teachers').remove({id: req.params.id}).write();
+        api.removeTeacher(req.params.id);
         res.redirect('/admin/teachers');
     });
 }

@@ -1,7 +1,10 @@
 module.exports = function(app, db) {
+    const ScheduleAPI = require('../../api');
+    const api = new ScheduleAPI(db);
+
     // Таблица аудиторий
     app.get('/admin/places', function (req, res) {
-        const places = db.get('places').value();
+        const places = api.getPlaces();
         res.render('places/places', {'places': places, 'placesPage' : true});
     });
 
@@ -12,30 +15,28 @@ module.exports = function(app, db) {
 
     // Обработка добавления аудитории
     app.post('/admin/new_place', function (req, res) {
-        db.get('places').insert(req.body).write().then(function (result) {
+        api.addPlace(req.body).then(function (result) {
             res.redirect('/admin/places/' + result.id + '/?updated=true');
         });
     });
 
     // Страница редактирования аудитории по id
     app.get('/admin/places/:id', function (req, res) {
-        const place = db.get('places')
-            .find({id: req.params.id})
-            .value();
+        const place = api.getPlace(req.params.id);
 
         res.render('places/place', {'place': place, 'updated' : req.query.updated, 'placesPage' : true});
     });
 
     // Обновить экземпляр аудитории по id
     app.post('/admin/places/:id', function (req, res) {
-        db.get('places').find({id: req.params.id}).assign(req.body).write().then(function (result) {
+        api.setPlace(req.params.id, req.body).then(function (result) {
             res.redirect('/admin/places/' + result.id + '/?updated=true');
         });
     });
 
     // Удалить экземпляр аудитории по id
     app.get('/admin/remove_place/:id', function (req, res) {
-        db.get('places').remove({id: req.params.id}).write();
+        api.removePlace(req.params.id);
         res.redirect('/admin/places');
     });
 }
