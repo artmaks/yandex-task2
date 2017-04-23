@@ -1,7 +1,9 @@
 # Яндекс мобилизация. Задание №2
 
 [Описание задания](https://academy.yandex.ru/events/frontend/shri_msk-2017/)
+
 [Демонстрация админ-панели](https://yandex-schedule.herokuapp.com/admin/)
+
 [Демонстрация интеграции с первым заданием](https://yandex-schedule.herokuapp.com/)
 
 ### Используемые технологии
