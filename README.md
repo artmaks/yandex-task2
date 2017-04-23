@@ -1,10 +1,8 @@
 # Яндекс мобилизация. Задание №2
 
-Описание задания: https://academy.yandex.ru/events/frontend/shri_msk-2017/
-
-Демонстрация админ-панели: https://yandex-schedule.herokuapp.com/admin/
-
-Демонстрация интеграции с первым заданием: https://yandex-schedule.herokuapp.com/
+[Описание задания](https://academy.yandex.ru/events/frontend/shri_msk-2017/)
+[Демонстрация админ-панели](https://yandex-schedule.herokuapp.com/admin/)
+[Демонстрация интеграции с первым заданием](https://yandex-schedule.herokuapp.com/)
 
 ### Используемые технологии
  * *lowdb* - лекговесная библиотека для работы с базой данных основанной на json файлах. Библиотека была выбрана по причине удобства внедрения в проект. Работа с JSON файлами не требует много ресурсов и прекрасно подходит для хранения маленького объема данных. Применнеие реляционных баз данных я посчитал излишним. Ссылка: https://github.com/typicode/lowdb
